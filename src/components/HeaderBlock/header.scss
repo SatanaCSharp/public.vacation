@@ -1,0 +1,19 @@
+.header-block {
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__logo {
+        width: 20%;
+        display: inline-flex;
+        align-items: center;
+        img {
+            width: 20px;
+            align-self: center;
+        }
+    }
+    &__logo-title {
+        font-size: 35px;
+    }
+}
