@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { HeaderBlock } from './components';
+import { SignIn }    from './pages'
+import { FooterBlock } from './components';
 class App extends Component {
   render() {
     return (
@@ -8,6 +10,8 @@ class App extends Component {
           firstName = "Jon"
           lastName = "Doe"
         />
+        <SignIn/>
+        <FooterBlock/>
     </div>
     );
   }

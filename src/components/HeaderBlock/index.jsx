@@ -1,4 +1,5 @@
 import React from 'react';
+import './header.scss';
 const HeaderBlock = ({firstName, lastName}) => {
     return (
         <div className="header-block">
