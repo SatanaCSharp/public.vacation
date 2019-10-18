@@ -19,4 +19,19 @@
         font-family: $fontPoppins;
         color: #31af91;
     }
+    &__user {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        .avatar {
+            width: 20px;
+            padding: 0 10px 0 0;
+        }
+        .full-name {
+            text-align: center;
+            font-size: 16px;
+            font-family: $fontPoppins;
+            color: $baseColor;
+        }
+    }
 }
