@@ -1,5 +1,7 @@
 import React from 'react';
 import './buttons.scss';
-const SuccessButton = ({buttonTitle}) => (<button className="success-btn">{buttonTitle}</button>);
+const SuccessButton = ({buttonTitle, handleButtonClick}) => (
+    <button className="success-btn" onClick={handleButtonClick}>{buttonTitle}</button>
+);
 
 export {SuccessButton};

@@ -1,5 +1,5 @@
 @import "../../styles/index.scss";
-
+@import '~pretty-checkbox/src/pretty-checkbox.scss';
 .input-group {
     margin: 0 auto;
     display: flex;
@@ -56,4 +56,17 @@
             }
         }
     }
+    &__checkbox {
+        margin: 0 0 15px;
+        &_label{
+            color: #6c757d;
+        }
+        .pretty.p-default:not(.p-fill) input:checked ~ .state.p-success-o &_label:after {
+            background-color: #228074 !important;
+        }
+        .pretty.p-default:not(.p-fill) input:checked ~ .state.p-success-o &_label:before {
+            border-color: #31af91 !important;
+        }
+    }
 }
+
