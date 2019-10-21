@@ -10,7 +10,9 @@ class SignInPage extends Component {
         email: '',
         password: '',
         rememberMe: false,
+        errors: [],
         loadStateClass: "loader-hidden",
+        buttonDisabledClass: 'btn-disabled'
     };
     handleEmailInputChange = ({target: {value } }) => {
         this.setState({
@@ -42,7 +44,6 @@ class SignInPage extends Component {
             loadStateClass: "loader-hidden"
         });
     };
-
     handleButtonClick = () => {
           this.showLoader();
           const {email, password} = this.state;
@@ -54,7 +55,7 @@ class SignInPage extends Component {
     };
 
     render () {
-        const {email, password, rememberMe, loadStateClass} = this.state;
+        const {email, password, rememberMe, loadStateClass, buttonDisabledClass} = this.state;
 
         return (
             <section className="sign-in-page content">
@@ -64,6 +65,9 @@ class SignInPage extends Component {
                 <section className="container">
                         <h3 className="sign-in-page__title">Sign In</h3>
                         <img className="sign-in-page__user-photo" src="https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Account-512.png" alt=""/>
+                        <section className="errors">
+
+                        </section>
                         <Inputs.SignInInputGroup
                             email = { email }
                             password = { password }
@@ -76,6 +80,7 @@ class SignInPage extends Component {
                             <Buttons.SuccessButton
                                 buttonTitle="Sign In"
                                 handleButtonClick={this.handleButtonClick}
+                                buttonDisabledClass={buttonDisabledClass}
                             />
                         </div>
                         <section className="links">

@@ -9,6 +9,7 @@
     background: linear-gradient(270deg,#2caf92,#1e6d68);
     outline: none;
     &:hover {
+        cursor: pointer;
         background: linear-gradient(90deg,#20776f,#33cca5);
         box-shadow: 0 6px 10px 0 rgba(48,187,154,.35);
     }
