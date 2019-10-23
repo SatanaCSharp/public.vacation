@@ -1,0 +1,13 @@
+@import "../../styles/index.scss";
+
+.cabinet {
+    .container {
+        display: flex;
+        @media ($screen-sm-min) {
+            justify-content: space-between;
+        }
+        @media ($screen-sm-max) {
+            flex-direction: column;
+        }
+    }
+}

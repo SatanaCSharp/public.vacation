@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { HeaderBlock, FooterBlock, SignUp, SignIn } from './components';
+import { HeaderBlock, FooterBlock, SignUp, SignIn, Cabinet } from './components';
 import { BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 class App extends Component {
   render() {
@@ -14,6 +14,7 @@ class App extends Component {
                 <Switch>
                     <Route path="/sign_in"  component={SignIn}/>
                     <Route path="/sign_up" component={SignUp}/>
+                    <Route path="/cabinet" component={Cabinet}/>
                     <Route path="/"><Redirect to="/sign_in"/></Route>
                 </Switch>
             </div>

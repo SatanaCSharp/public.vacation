@@ -1,7 +1,21 @@
+body{
+    margin: 0;
+}
 .container {
-    max-width: 1140px;
     margin: 0 auto;
     padding: 0 15px;
+    @media($screen-md-min) {
+        max-width: 1140px;
+    }
+    @media($screen-tablet-break) {
+        max-width: 991px;
+    }
+    @media($screen-mobile-break) {
+        max-width: 767px;
+    }
+    @media($screen-xs-max) {
+        max-width: 479px;
+    }
 }
 
 .content {

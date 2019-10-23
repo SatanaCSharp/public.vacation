@@ -3,6 +3,7 @@ import FooterBlock from './FooterBlock';
 import LoaderBlock from './LoaderBlock';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import Cabinet from './Cabinet';
 import * as Buttons from './ButtonsBlock';
 import * as Inputs  from './Inputs';
 export {
@@ -11,6 +12,7 @@ export {
     LoaderBlock,
     SignIn,
     SignUp,
+    Cabinet,
     Buttons,
     Inputs
 };
