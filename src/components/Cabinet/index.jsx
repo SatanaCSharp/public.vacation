@@ -1,68 +1,95 @@
 import React, { Component } from 'react';
 import UserInfoBlock from "../UserInfoBlock";
 import VacationTableBlock from "../VacationTableBlock";
+import LoaderBlock from '../LoaderBlock';
+import axios from 'axios';
+import config from "../../config";
 import "./cabinet.scss";
 class Cabinet extends Component {
     state = {
+        userId: '',
+        firstName: '',
+        lastName:"",
+        email:"",
+        hiredDate:"",
+        balance:"",
+        vacations:[],
+        loadStateClass: "loader-hidden"
     }
-
-    getVacations = ()=> {
-        return [
-            {
-                _id: "1",
-                startDate: "2019-10-23",
-                endDate: "2019-10-24",
-                description: "Lorem impsum dolor set amet"
-            },
-            {
-                _id: "2",
-                startDate: "2019-10-23",
-                endDate: "2019-10-24",
-                description: "Lorem impsum dolor set amet"
-            },
-            {
-                _id: "3",
-                startDate: "2019-10-23",
-                endDate: "2019-10-24",
-                description: "Lorem impsum dolor set amet"
-            },
-            {
-                _id: "4",
-                startDate: "2019-10-23",
-                endDate: "2019-10-24",
-                description: "Lorem impsum dolor set amet"
-            },
-            {
-                _id: "5",
-                startDate: "2019-10-23",
-                endDate: "2019-10-24",
-                description: "Lorem impsum dolor set amet"
-            },
-            {
-                _id: "6",
-                startDate: "2019-10-23",
-                endDate: "2019-10-24",
-                description: "Lorem impsum dolor set amet"
-            },
-            {
-                _id: "7",
-                startDate: "2019-10-23",
-                endDate: "2019-10-24",
-                description: "Lorem impsum dolor set amet"
-            },
-        ]
+    showLoader = () => {
+        this.setState({
+            loadStateClass: "loader-show"
+        });
+    };
+    hideLoader = () => {
+        this.setState({
+            loadStateClass: "loader-hidden"
+        });
+    };
+    fetchVacationBalance = (userId, token) =>{
+        axios.get(`${config.apiUrl}/vacations/users/${userId}/balance`,{
+            headers:{"Authorization": token}
+        }).then(({data})=>{
+            console.log("Balance:", data);
+            this.setState({
+                balance: data.amount
+            });
+        });
+    }
+    fetchUser = (userId, token)=> {
+        axios.get(`${config.apiUrl}/users/${userId}`,{
+            headers:{"Authorization": token}
+        }).then(({data})=>{
+            const hiredDate = data.hiredDate.substring(0,10);
+            this.setState({
+                ...data,
+                hiredDate,
+                userId: data._id
+            });
+        });
+    }
+    fetchVacations = (userId,token) => {
+        axios.get(`${config.apiUrl}/users/${userId}/vacations`,{
+            headers:{"Authorization": token}
+        }).then(({data})=>{
+            this.setState({
+                vacations: data
+            });
+            this.hideLoader();
+        });
+    }
+    componentDidMount() {
+        this.showLoader();
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("id");
+        this.fetchVacationBalance(userId, token);
+        this.fetchUser(userId, token);
+        this.fetchVacations(userId, token);
     }
     render() {
-        const vacations = this.getVacations();
+        const {
+            userId,
+            firstName,
+            lastName,
+            email,
+            hiredDate,
+            balance,
+            vacations,
+            loadStateClass,
+        } = this.state;
         return (
             <section className="cabinet">
+                  <LoaderBlock
+                    loadStateClass= {loadStateClass}
+                />
                 <section className="container">
                     <UserInfoBlock
-                        firstName="Jon"
-                        lastName="Doe"
-                        email="jon.doe@gm.com"
-                        hiredDate="2019-10-23"
-                        balance={21}
+                        userId={userId}
+                        firstName={firstName}
+                        lastName={lastName}
+                        email={email}
+                        hiredDate={hiredDate}
+                        balance={balance}
                     />
                     <VacationTableBlock vacations={vacations}/>
                 </section>

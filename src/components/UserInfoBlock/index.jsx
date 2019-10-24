@@ -35,14 +35,19 @@ const BalanceBlock = ({balance}) => (
         </section>
     </section>
 );
-const EditLinkBlock = ()=>(
+const EditLinkBlock = ({userId})=>(
     <section className="link">
-        <Link to="/" className="link__edit"><FiEdit2 color={"#fff"} /></Link>
+        <Link to={"/user/edit/"+userId} className="link__edit"><FiEdit2 color={"#fff"} /></Link>
     </section>
 );
-const UserInfoBlock = ({firstName, lastName, email, hiredDate, balance })=> (
+const UserInfoBlock = ({userId, firstName, lastName, email, hiredDate, balance })=> (
     <section className="user-info">
-        <img className="user-info__avatar" src="http://gsdl.org.in/gsdl%20image/user.png" alt=""/>
+        <section className="user-info__avatar">
+            <EditLinkBlock
+                userId={userId}
+            />
+            <img  src="http://gsdl.org.in/gsdl%20image/user.png" alt=""/>
+        </section>
         <section className="user-info__details">
             <FullNameBlock
                 firstName={firstName}
@@ -52,7 +57,6 @@ const UserInfoBlock = ({firstName, lastName, email, hiredDate, balance })=> (
             <HiredDateBlock hiredDate={hiredDate}/>
             <BalanceBlock balance={balance}/>
         </section>
-        <EditLinkBlock/>
     </section>
 );
 export default UserInfoBlock;

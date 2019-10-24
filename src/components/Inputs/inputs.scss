@@ -1,6 +1,6 @@
 @import "../../styles/index.scss";
 @import '~pretty-checkbox/src/pretty-checkbox.scss';
-.input-group {
+ .input-group{
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -39,6 +39,63 @@
             @media ($screen-sm-min) {
                 width: 45%;
             }
+        }
+    }
+    &__date-picker {
+        display: inline-flex;
+        @media ($screen-sm-min) {
+            justify-content: space-between;
+        }
+        @media ($screen-sm-max) {
+            flex-direction: column;
+            align-items: center;
+        }
+        .react-datepicker-wrapper {
+            display: inline-flex;
+            @media ($screen-sm-min) {
+                width: 45%;
+            }
+            @media ($screen-sm-max) {
+                width: 100%;
+            }
+            input {
+                width: 90%;
+            }
+        }
+    }
+    .react-datepicker__day--selected {
+        background-color: $baseBg;
+    }
+    .user-edit & .input-group__date-picker{
+        .react-datepicker-wrapper {
+            display: inline-flex;
+            @media ($screen-sm-min) {
+                width:  100%;
+            }
+            @media ($screen-sm-max) {
+                width: 100%;
+            }
+            input {
+                width: 96%;
+            }
+        }
+    }
+    &__description {
+        height: 120px;
+        margin: 0 0 15px;
+        padding: 5px 10px;
+        font-size: 16px;
+        border: 1px  solid #999;
+        border-radius: 5px;
+        outline: none;
+        &:hover {
+            border-color: $baseBg;
+        }
+        @media ($screen-sm-min) {
+            width: 95%;
+        }
+        @media ($screen-sm-max) {
+            width: 90%;
         }
     }
     &__passwords {

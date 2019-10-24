@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { FiEdit2, FiTrash, FiPlus } from "react-icons/fi";
+import { FiEdit2, FiTrash } from "react-icons/fi";
 import { FaInfo } from "react-icons/fa";
 import "./vacation_table.scss";
 const VacationActions = ({_id}) =>(
@@ -8,11 +8,11 @@ const VacationActions = ({_id}) =>(
         <Link className="actions__link actions__details" to={"/"+_id}>
             <FaInfo size={18} color={"#17a2b8"} />
         </Link>
-        <Link className="actions__link actions__edit" to={"/"+_id}>
+        <Link className="actions__link actions__edit" to={"/vacation/edit/"+_id}>
              <FiEdit2 size={18} color={"#57bea5"} />
         </Link>
         <Link className="actions__link actions__delete" to={"/"+_id}>
-            <FiTrash size={18} color={"#dc3545"} /> 
+            <FiTrash size={18} color={"#dc3545"} />
         </Link>
     </section>
 )
@@ -41,7 +41,7 @@ const VacationTableBody = ({vacations})=>(
 const VacationTableBlock = ({vacations}) => (
     <section className="vacation-list">
         <section className="vacation-link">
-            <Link className="vacation-link__add" to={"/"}>Add Vacation</Link>
+            <Link className="vacation-link__add" to={"/vacation/create"}>Add Vacation</Link>
         </section>
         <VacationTableBody vacations={vacations}/>
     </section>

@@ -1,9 +1,6 @@
 import React from 'react';
 import "./loader.scss";
 
-
-
-
 const LoaderBlock = ({loadStateClass}) => (
     <div className={" react-spinner-loader-svg " +  loadStateClass }>
         <svg id="triangle" width="120" height="120" viewBox="-3 -4 39 39" aria-label="audio-loading">

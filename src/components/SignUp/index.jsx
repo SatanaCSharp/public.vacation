@@ -53,7 +53,6 @@ class SignUpPage extends Component {
     handleButtonClick = () => {
         this.showLoader();
         const { firstName, lastName, email, password,passwordConfirmation } = this.state;
-        console.log("State: ", this.state);
         axios.post(`${config.apiUrl}/auth/sign_up`, { firstName, lastName, email, password, passwordConfirmation })
             .then(({ data: { user } }) => {
                 localStorage.setItem("token", user.token);
