@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import UserInfoBlock from "../UserInfoBlock";
 import VacationListBlock from "../../Vacation/VacationListBlock";
 import LoaderBlock from '../../blocks/LoaderBlock';
@@ -74,9 +75,9 @@ class Cabinet extends Component {
             email,
             hiredDate,
             balance,
-            vacations,
             loadStateClass,
         } = this.state;
+        const { vacations } = this.props;
         return (
             <section className="cabinet">
                   <LoaderBlock
@@ -98,4 +99,6 @@ class Cabinet extends Component {
     }
 }
 
-export default Cabinet;
+export default connect(state=>({
+    vacations: state.vacations,
+}))(Cabinet);

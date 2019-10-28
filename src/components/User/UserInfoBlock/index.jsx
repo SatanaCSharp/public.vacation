@@ -38,7 +38,7 @@ const BalanceBlock = ({balance}) => (
 const UserInfoBlock = ({userId, firstName, lastName, email, hiredDate, balance })=> (
     <section className="user-info">
         <section className="user-info__avatar">
-            <Buttons.EditButton to={userId}/>
+            <Buttons.EditButton to={`/user/edit/${userId}`}/>
             <img  src="http://gsdl.org.in/gsdl%20image/user.png" alt=""/>
         </section>
         <section className="user-info__details">
