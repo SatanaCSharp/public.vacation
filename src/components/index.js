@@ -1,14 +1,14 @@
-import HeaderBlock from './HeaderBlock';
-import FooterBlock from './FooterBlock';
-import LoaderBlock from './LoaderBlock';
-import * as Buttons from './ButtonsBlock';
-import * as Inputs  from './Inputs';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import Cabinet from './Cabinet';
-import CreateVacation from "./CreateVacation";
-import EditVacation from "./EditVacation";
-import EditUser from "./EditUser";
+import HeaderBlock from './blocks/HeaderBlock';
+import FooterBlock from './blocks/FooterBlock';
+import LoaderBlock from './blocks/LoaderBlock';
+import * as Buttons from './blocks/ButtonsBlock';
+import * as Inputs  from './blocks/Inputs';
+import SignIn from './Auth/SignIn';
+import SignUp from './Auth/SignUp';
+import Cabinet from './User/Cabinet';
+import CreateVacation from "./Vacation/CreateVacation";
+import EditVacation from "./Vacation/EditVacation";
+import EditUser from "./User/EditUser";
 export {
     HeaderBlock,
     FooterBlock,
