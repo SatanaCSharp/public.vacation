@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Buttons, Inputs } from '../..';
+import { Buttons, Inputs } from '../../../';
 import { Link } from "react-router-dom";
-import LoaderBlock from "../../blocks/LoaderBlock";
 import axios from "axios";
-import config from "../../../config";
+import config from "../../../../config";
 import "./sign_up.scss";
 class SignUpPage extends Component {
     state = {
@@ -11,8 +10,7 @@ class SignUpPage extends Component {
         lastName: '',
         email: '',
         password: '',
-        passwordConfirmation: '',
-        loadStateClass: "loader-hidden"
+        passwordConfirmation: ''
     };
     handleFirstNameInputChange = ({target: { value } }) => {
         this.setState({
@@ -39,34 +37,19 @@ class SignUpPage extends Component {
             passwordConfirmation: value
         });
     };
-    showLoader = () => {
-        this.setState({
-            loadStateClass: "loader-show"
-        });
-    };
-    hideLoader = () => {
-        this.setState({
-            loadStateClass: "loader-hidden"
-        });
-    };
 
     handleButtonClick = () => {
-        this.showLoader();
         const { firstName, lastName, email, password,passwordConfirmation } = this.state;
         axios.post(`${config.apiUrl}/auth/sign_up`, { firstName, lastName, email, password, passwordConfirmation })
             .then(({ data: { user } }) => {
-                localStorage.setItem("token", user.token);
-                localStorage.setItem("id", user._id);
-                this.hideLoader();
+                // localStorage.setItem("token", user.token);
+                // localStorage.setItem("id", user._id);
             });
     };
     render () {
-        const { firstName, lastName, email, password,passwordConfirmation,loadStateClass } = this.state;
+        const { firstName, lastName, email, password,passwordConfirmation } = this.state;
         return (
             <section className="sign-up-page content">
-                <LoaderBlock
-                    loadStateClass= {loadStateClass}
-                />
                 <section className="container">
                         <h3 className="sign-up-page__title">Sign Up</h3>
                         <img className="sign-up-page__user-photo" src="https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Account-512.png" alt=""/>

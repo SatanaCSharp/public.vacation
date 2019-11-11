@@ -1,5 +1,5 @@
 import React from 'react';
-import { Buttons } from '../..';
+import { Buttons } from '../../../';
 import VacationList from './vacationList';
 import "./vacation_list_block.scss";
 const VacationListBlock = ({vacations}) => (

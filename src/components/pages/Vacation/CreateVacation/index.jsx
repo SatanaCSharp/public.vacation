@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import { Inputs } from "../../";
+import { Inputs } from "../../../";
 import "./create_vacation.scss";
 
 class CreateVacation extends Component {

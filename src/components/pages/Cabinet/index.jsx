@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserInfoBlock from "../UserInfoBlock";
-import VacationListBlock from "../../Vacation/VacationListBlock";
-import LoaderBlock from '../../blocks/LoaderBlock';
+import VacationListBlock from "../Vacation/VacationListBlock";
+import LoaderBlock from '../../hoc/LoadingHOC';
 import axios from 'axios';
 import config from "../../../config";
 import "./cabinet.scss";

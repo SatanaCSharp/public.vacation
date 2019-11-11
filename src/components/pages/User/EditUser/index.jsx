@@ -1,8 +1,8 @@
 import React, { Component} from "react";
-import { Inputs } from "../../";
-import LoaderBlock from '../../blocks/LoaderBlock';
+import { Inputs } from "../../..";
+import LoaderBlock from '../../../hoc/LoadingHOC';
 import axios from "axios";
-import config from "../../../config";
+import config from "../../../../config";
 
 class EditUser extends Component {
     state = {

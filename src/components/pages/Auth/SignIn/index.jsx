@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Buttons, Inputs } from '../../';
+import { Buttons, Inputs } from '../../../';
 import { Link } from "react-router-dom";
-import LoaderBlock from "../../blocks/LoaderBlock";
-import config from '../../../config';
+import LoaderBlock from "../../../hoc/LoadingHOC";
+import config from '../../../../config';
 import axios from  'axios';
 import "./sign_in.scss";
 class SignInPage extends Component {

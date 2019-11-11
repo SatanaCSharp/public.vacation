@@ -1,5 +1,5 @@
 import React from 'react';
-import { Buttons } from '../../';
+import { Buttons } from '../../../';
 import "./user_info_block.scss";
 const FullNameBlock = ({firstName, lastName}) =>(
     <section className="full-name">

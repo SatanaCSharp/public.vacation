@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import { Inputs } from "../../";
+import { Inputs } from "../../../";
 import "./edit_vacation.scss";
 
 
