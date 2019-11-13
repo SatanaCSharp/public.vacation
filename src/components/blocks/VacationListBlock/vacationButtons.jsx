@@ -1,5 +1,5 @@
 import React from 'react';
-import { Buttons } from '../../../';
+import { Buttons } from "../../";
 const VacationButtons = ({_id}) =>(
     <section className="buttons">
         <Buttons.InfoCircleButton  to={"/"+_id}/>

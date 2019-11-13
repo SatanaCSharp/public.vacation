@@ -13,7 +13,7 @@ const Loader = () =>(
             </polygon>
         </svg>
     </div>
-)
+);
 
 const LoadingHOC = (loadingProp) => (WrappedComponent) => {
     return class LoadingHOC extends Component {

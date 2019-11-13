@@ -1,82 +1,101 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { Buttons, Inputs } from '../../../';
 import { Link } from "react-router-dom";
-import axios from "axios";
-import config from "../../../../config";
+import { toast, ToastContainer } from 'react-toastify';
+import store from "../../../../store";
+import 'react-toastify/dist/ReactToastify.css';
+import * as validationService from "../../../../services/validationService";
 import "./sign_up.scss";
+import { signUpRequest } from '../../../../services/requestService';
+import { setUser } from "../../../../actions/userActionCreator";
+const SignUpBlock = ({userProp, handleInputChange, handleButtonClick})=>(
+    <section className="sign-up-page content">
+        <ToastContainer />
+    <section className="container">
+            <h3 className="sign-up-page__title">Sign Up</h3>
+            <img className="sign-up-page__user-photo" src="https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Account-512.png" alt=""/>
+            <Inputs.SignUpInputGroup
+                userProp={userProp}
+                handleInputChange = { handleInputChange }
+            />
+            <div className="sign-up-page__button">
+                <Buttons.SuccessButton buttonTitle="Sign Up" handleButtonClick={handleButtonClick}/>
+            </div>
+            <section className="links">
+                <ul className="links-list">
+                    <li className="links-list__link-item"><Link to="/sign_in"> Already have an account?</Link></li>
+                </ul>
+            </section>
+    </section>
+</section>
+);
 class SignUpPage extends Component {
     state = {
         firstName: '',
         lastName: '',
         email: '',
         password: '',
-        passwordConfirmation: ''
+        passwordConfirmation: '',
+        errors: []
     };
-    handleFirstNameInputChange = ({target: { value } }) => {
+    handleInputChange = ({ target: {name, value } }) => {
         this.setState({
-            firstName: value
+            [name]: value
         });
     };
-    handleLastNameInputChange = ({target: { value } }) => {
+    setErrors = (errors) => {
         this.setState({
-            lastName: value
+            errors: errors
+        })
+    }
+    getErrorsValidatedForm = ()=> {
+        const {firstName, lastName, email, password, passwordConfirmation} = this.state;
+        const validationErrors =  [
+            validationService.validateNameField(firstName, "First name"),
+            validationService.validateNameField(lastName, "Last name"),
+            validationService.validateEmailField(email),
+            validationService.validatePassword(password),
+            validationService.validatePasswordConfirmation(password, passwordConfirmation),
+        ].filter((err)=> err !== undefined);
+        this.setErrors(validationErrors);
+        return validationErrors.length ? validationErrors : null;
+    }
+    showErrors = (errors) => {
+        errors.forEach((err)=>{
+            toast.error(err, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+              });
         });
-    };
-    handleEmailInputChange = ({target: { value } }) => {
-        this.setState({
-            email: value
-        });
-    };
-    handlePasswordInputChange = ({target: { value } }) => {
-        this.setState({
-            password: value
-        });
-    };
-    handlePasswordConfirmationInputChange = ({target: { value } }) => {
-        this.setState({
-            passwordConfirmation: value
-        });
-    };
-
+    }
     handleButtonClick = () => {
-        const { firstName, lastName, email, password,passwordConfirmation } = this.state;
-        axios.post(`${config.apiUrl}/auth/sign_up`, { firstName, lastName, email, password, passwordConfirmation })
-            .then(({ data: { user } }) => {
-                // localStorage.setItem("token", user.token);
-                // localStorage.setItem("id", user._id);
-            });
+        const errors = this.getErrorsValidatedForm();
+        if(errors) {
+            this.showErrors(errors);
+            console.log("Errors: ", errors);
+        } else {
+            const {firstName, lastName, email, password, passwordConfirmation} = this.state;
+            const user = signUpRequest({firstName, lastName, email, password, passwordConfirmation});
+            store.dispatch(setUser(user._id, user.token));
+        }
     };
     render () {
-        const { firstName, lastName, email, password,passwordConfirmation } = this.state;
+        const userProp  = this.state;
         return (
-            <section className="sign-up-page content">
-                <section className="container">
-                        <h3 className="sign-up-page__title">Sign Up</h3>
-                        <img className="sign-up-page__user-photo" src="https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Account-512.png" alt=""/>
-                        <Inputs.SignUpInputGroup
-                            firstName= { firstName }
-                            lastName= { lastName }
-                            email= { email }
-                            password= { password }
-                            passwordConfirmation= { passwordConfirmation }
-                            handleFirstNameInputChange = { this.handleFirstNameInputChange }
-                            handleLastNameInputChange ={ this.handleLastNameInputChange }
-                            handleEmailInputChange ={ this.handleEmailInputChange }
-                            handlePasswordInputChange ={ this.handlePasswordInputChange }
-                            handlePasswordConfirmationInputChange ={ this.handlePasswordConfirmationInputChange }
-
-                        />
-                        <div className="sign-up-page__button">
-                            <Buttons.SuccessButton buttonTitle="Sign Up" handleButtonClick={this.handleButtonClick}/>
-                        </div>
-                        <section className="links">
-                            <ul className="links-list">
-                                <li className="links-list__link-item"><Link to="/sign_in"> Already have an account?</Link></li>
-                            </ul>
-                        </section>
-                </section>
-            </section>
+                <SignUpBlock
+                    userProp={userProp}
+                    handleInputChange={this.handleInputChange}
+                    handleButtonClick={this.handleButtonClick}
+                />
         );
     }
 }
-export default SignUpPage;
+const mapStateToProps = state => ({
+    user: state.user
+});
+export default  connect(mapStateToProps)(SignUpPage);

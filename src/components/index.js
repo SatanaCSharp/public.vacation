@@ -1,6 +1,8 @@
 import HeaderBlock from './blocks/HeaderBlock';
 import FooterBlock from './blocks/FooterBlock';
 import LoaderBlock from './hoc/LoadingHOC';
+import UserInfoBlock from './blocks/UserInfoBlock';
+import VacationListBlock from './blocks/VacationListBlock';
 import * as Buttons from './blocks/ButtonsBlock';
 import * as Inputs  from './blocks/Inputs';
 import SignIn from './pages/Auth/SignIn';
@@ -13,6 +15,8 @@ export {
     HeaderBlock,
     FooterBlock,
     LoaderBlock,
+    UserInfoBlock,
+    VacationListBlock,
     Buttons,
     Inputs,
     SignIn,

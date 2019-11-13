@@ -10,7 +10,6 @@ const UserHeaderBlock =({firstName, lastName})=>(
 );
 const Navigation = ({firstName, lastName})=>{
   const token = localStorage.getItem("token");
-  console.log(token);
   return token ? <UserHeaderBlock firstName={firstName} lastName={lastName}/>: <AuthNavigationBlock/>;
 
 };
