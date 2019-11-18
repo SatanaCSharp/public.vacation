@@ -1,7 +1,7 @@
-import { SET_USER } from '../constants/actionTypes';
+import { USER_FULFILLED } from '../constants/actionTypes';
 export const user = (state={}, {type, payload}) => {
     switch(type) {
-        case SET_USER:
+        case USER_FULFILLED:
             return {
                    ...state,
                    ...payload

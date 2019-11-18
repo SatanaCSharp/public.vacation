@@ -1,5 +1,3 @@
-export const ADD_VACATION = "ADD_VACATION";
-export const EDIT_VACATION = "EDIT_VACATION";
-export const DELETE_VACATION = "DELETE_VACATION";
-export const SET_USER = "SET_USER";
-export const EDIT_USER = "EDIT_USER";
+export const USER_PENDING = "USER_PENDING";
+export const USER_FULFILLED = "USER_FULFILLED";
+export const USER_REJECTED = "USER_REJECTED";

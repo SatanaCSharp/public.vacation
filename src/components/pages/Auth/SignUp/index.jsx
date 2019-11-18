@@ -1,35 +1,34 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
 import { Buttons, Inputs } from '../../../';
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
-import store from "../../../../store";
-import 'react-toastify/dist/ReactToastify.css';
+import { signUpRequest } from "../../../../services/requestService";
 import * as validationService from "../../../../services/validationService";
 import "./sign_up.scss";
-import { signUpRequest } from '../../../../services/requestService';
-import { setUser } from "../../../../actions/userActionCreator";
-const SignUpBlock = ({userProp, handleInputChange, handleButtonClick})=>(
-    <section className="sign-up-page content">
-        <ToastContainer />
-    <section className="container">
-            <h3 className="sign-up-page__title">Sign Up</h3>
-            <img className="sign-up-page__user-photo" src="https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Account-512.png" alt=""/>
-            <Inputs.SignUpInputGroup
-                userProp={userProp}
-                handleInputChange = { handleInputChange }
-            />
-            <div className="sign-up-page__button">
-                <Buttons.SuccessButton buttonTitle="Sign Up" handleButtonClick={handleButtonClick}/>
-            </div>
-            <section className="links">
-                <ul className="links-list">
-                    <li className="links-list__link-item"><Link to="/sign_in"> Already have an account?</Link></li>
-                </ul>
-            </section>
+import 'react-toastify/dist/ReactToastify.css';
+
+const SignUpBlock = ({props, handleInputChange, handleButtonClick})=>(
+        <section className="sign-up-page content">
+            <ToastContainer />
+        <section className="container">
+                <h3 className="sign-up-page__title">Sign Up</h3>
+                <img className="sign-up-page__user-photo" src="https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Account-512.png" alt=""/>
+                <Inputs.SignUpInputGroup
+                    userProp={props}
+                    handleInputChange = { handleInputChange }
+                />
+                <div className="sign-up-page__button">
+                    <Buttons.SuccessButton buttonTitle="Sign Up" handleButtonClick={handleButtonClick}/>
+                </div>
+                <section className="links">
+                    <ul className="links-list">
+                        <li className="links-list__link-item"><Link to="/sign_in"> Already have an account?</Link></li>
+                    </ul>
+                </section>
+        </section>
     </section>
-</section>
 );
+
 class SignUpPage extends Component {
     state = {
         firstName: '',
@@ -37,7 +36,8 @@ class SignUpPage extends Component {
         email: '',
         password: '',
         passwordConfirmation: '',
-        errors: []
+        errors: [],
+        redirect: false
     };
     handleInputChange = ({ target: {name, value } }) => {
         this.setState({
@@ -77,25 +77,27 @@ class SignUpPage extends Component {
         const errors = this.getErrorsValidatedForm();
         if(errors) {
             this.showErrors(errors);
-            console.log("Errors: ", errors);
         } else {
             const {firstName, lastName, email, password, passwordConfirmation} = this.state;
-            const user = signUpRequest({firstName, lastName, email, password, passwordConfirmation});
-            store.dispatch(setUser(user._id, user.token));
+            signUpRequest({firstName, lastName, email, password, passwordConfirmation})
+            .then((user) => {
+                localStorage.setItem("userId", user._id);
+                localStorage.setItem("token", `Bearer ${user.token}`);
+            }).then(()=>{
+                this.props.history.push("/cabinet");
+            });
         }
     };
     render () {
-        const userProp  = this.state;
+        const props  = this.state;
         return (
                 <SignUpBlock
-                    userProp={userProp}
+                    props={props}
                     handleInputChange={this.handleInputChange}
                     handleButtonClick={this.handleButtonClick}
                 />
         );
     }
 }
-const mapStateToProps = state => ({
-    user: state.user
-});
-export default  connect(mapStateToProps)(SignUpPage);
+
+export default  SignUpPage;
