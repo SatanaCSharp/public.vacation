@@ -35,10 +35,10 @@ const BalanceBlock = ({balance}) => (
     </section>
 );
 
-const UserInfoBlock = ({props })=> (
+const UserInfoBlock = ({ props })=> (
     <section className="user-info">
         <section className="user-info__avatar">
-            <Buttons.EditButton to={`/user/edit/${props.userId}`}/>
+            <Buttons.EditButton to={`/user/edit/${props._id}`}/>
             <img  src="http://gsdl.org.in/gsdl%20image/user.png" alt=""/>
         </section>
         <section className="user-info__details">
@@ -48,7 +48,7 @@ const UserInfoBlock = ({props })=> (
             />
             <EmailBlock email={props.email}/>
             <HiredDateBlock hiredDate={props.hiredDate}/>
-            <BalanceBlock balance={props.balance}/>
+            <BalanceBlock balance={props.vacationBalance}/>
         </section>
     </section>
 );

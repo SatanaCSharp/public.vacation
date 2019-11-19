@@ -8,8 +8,7 @@ export const  userFulfilled = (payload) =>({
     type: USER_FULFILLED,
     payload
 });
-export const  userRejected = (payload) =>({
-    type: USER_REJECTED,
-    payload
+export const  userRejected = () =>({
+    type: USER_REJECTED
 });
 

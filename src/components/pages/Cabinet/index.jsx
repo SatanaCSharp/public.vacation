@@ -4,15 +4,6 @@ import { userPending } from "../../../actions/userActionCreator";
 import { UserInfoBlock, VacationListBlock } from "../../";
 import "./cabinet.scss";
 class Cabinet extends Component {
-    state = {
-        userId: '',
-        firstName: '',
-        lastName:"",
-        email:"",
-        hiredDate:"",
-        balance:"",
-        vacations:[]
-    }
     getTokenAndId() {
         return {
             userId: localStorage.getItem("userId"),
@@ -24,12 +15,12 @@ class Cabinet extends Component {
         this.props.dispatch(userPending(userTokenAndId));
     }
     render() {
-        const props = this.state;
+        const {user} = this.props;
         const vacations = [];
         return (
             <section className="cabinet">
                 <section className="container">
-                    <UserInfoBlock props={props}/>
+                    <UserInfoBlock props={user}/>
                     <VacationListBlock vacations={vacations}/>
                 </section>
             </section>
