@@ -1,8 +1,10 @@
 import React, { Component} from "react";
-import { Inputs } from "../../..";
-import LoaderBlock from '../../../hoc/LoadingHOC';
 import axios from "axios";
 import config from "../../../../config";
+import { connect } from "react-redux";
+import { Inputs, Buttons } from "../../..";
+import { getUserData } from "../../../../services/localStorageService";
+import { userPending } from "../../../../actions/userActionCreator";
 
 class EditUser extends Component {
     state = {
@@ -11,45 +13,28 @@ class EditUser extends Component {
         lastName: '',
         email: '',
         hiredDate: '',
-        loadStateClass: "loader-hidden"
     }
-    handleFirstNameInputChange = ({target: { value } }) => {
+    initUserState(user) {
+        const {_id, firstName, lastName, email, hiredDate } = user;
         this.setState({
-            firstName: value
+            userId: _id,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            hiredDate: new Date(hiredDate),
+        });
+    }
+    handleInputChange = ({target: {name, value } }) => {
+        this.setState({
+            [name]: value
         });
     };
-    handleLastNameInputChange = ({target: { value } }) => {
-        this.setState({
-            lastName: value
-        });
-    };
-    handleEmailInputChange = ({target: { value } }) => {
-        this.setState({
-            email: value
-        });
-    };
-    handleEmailInputChange = ({target: { value } }) => {
-        this.setState({
-            email: value
-        });
-    };
-    handlerHiredDate = (date) => {
+    handleInputDateChange=(date)=>{
         this.setState({
             hiredDate: date
-        });
-    };
-    showLoader = () => {
-        this.setState({
-            loadStateClass: "loader-show"
-        });
-    };
-    hideLoader = () => {
-        this.setState({
-            loadStateClass: "loader-hidden"
-        });
-    };
+        })
+    }
     handleButtonClick = () => {
-        this.showLoader();
         const token = localStorage.getItem("token");
         const {userId, firstName, lastName, email, hiredDate} = this.state;
         axios.put(`${config.apiUrl}/users/${userId}`,{
@@ -57,53 +42,36 @@ class EditUser extends Component {
         },
         {
             headers:{"Authorization": token}
-        }).then((data)=>{
-            this.hideLoader();
         });
     }
-    fetchUser = (userId, token)=> {
-        axios.get(`${config.apiUrl}/users/${userId}`,{
-            headers:{"Authorization": token}
-        }).then(({data})=>{
-            const hiredDate = new Date(data.hiredDate);
-            this.setState({
-                ...data,
-                hiredDate,
-                userId: data._id
-            });
-            this.hideLoader();
-        });
-    }
-
     componentDidMount() {
-        this.showLoader();
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("id");
-        this.fetchUser(userId, token);
+        if(!Object.keys(this.props.user).length) {
+            const userData = getUserData();
+            this.props.dispatch(userPending(userData));
+        }
+        if(Object.keys(this.props.user).length) {
+            this.initUserState(this.props.user);
+            console.log("Reload User: ", this.props);
+        }
     }
     render () {
-
-        const {firstName, lastName, email, hiredDate, loadStateClass} = this.state;
+        const props = this.state;
         return(
             <section className="user-edit">
-                  <LoaderBlock
-                    loadStateClass= {loadStateClass}
-                />
                 <section className="container">
+                    <Buttons.BackButton title={"Go Back"} to={"/cabinet"} />
                     <Inputs.EditUserInputGroup
-                        firstName={firstName}
-                        lastName={lastName}
-                        email={email}
-                        hiredDate={hiredDate}
-                        handleLastNameInputChange={this.handleLastNameInputChange}
-                        handleFirstNameInputChange={this.handleFirstNameInputChange}
-                        handleEmailInputChange={this.handleEmailInputChange}
-                        handlerHiredDate={this.handlerHiredDate}
+                        props={props}
+                        handleInputChange={this.handleInputChange}
                         handleButtonClick={this.handleButtonClick}
+                        handleInputDateChange={this.handleInputDateChange}
                     />
                 </section>
             </section>
         )
     }
 }
-export default EditUser;
+const mapStateToProps = (state) =>({
+    user: state.user
+});
+export default connect(mapStateToProps)(EditUser);

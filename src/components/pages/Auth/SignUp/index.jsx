@@ -4,6 +4,7 @@ import { Link} from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import { signUpRequest } from "../../../../services/requestService";
 import * as validationService from "../../../../services/validationService";
+import { setUserData }  from "../../../../services/localStorageService";
 import "./sign_up.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -81,8 +82,7 @@ class SignUpPage extends Component {
             const {firstName, lastName, email, password, passwordConfirmation} = this.state;
             signUpRequest({firstName, lastName, email, password, passwordConfirmation})
             .then((user) => {
-                localStorage.setItem("userId", user._id);
-                localStorage.setItem("token", `Bearer ${user.token}`);
+                setUserData(user._id, user.token)
             }).then(()=>{
                 this.props.history.push("/cabinet");
             });

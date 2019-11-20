@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { userPending } from "../../../actions/userActionCreator";
 import { UserInfoBlock, VacationListBlock } from "../../";
+import { getUserData } from '../../../services/localStorageService';
 import "./cabinet.scss";
 class Cabinet extends Component {
-    getTokenAndId() {
-        return {
-            userId: localStorage.getItem("userId"),
-            token: localStorage.getItem("token")
-        }
-    }
     componentDidMount() {
-        const userTokenAndId = this.getTokenAndId();
-        this.props.dispatch(userPending(userTokenAndId));
+        const { user } = this.props;
+        if(!Object.keys(user).length) {
+            const userData = getUserData();
+            this.props.dispatch(userPending(userData));
+        }
     }
     render() {
         const {user} = this.props;

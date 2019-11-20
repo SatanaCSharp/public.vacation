@@ -14,7 +14,19 @@ const getUserRequest = async (userId, token) => {
     });
     return mapUserResponseToStateObject(userResponse);
 }
+
+const putUserRequest = async ({ userId, token, firstName, lastName, email, hiredDate }) => {
+    if(!userId) return null;
+    const userResponse = await axios.put(`${config.apiUrl}/users/${userId}`,{
+        firstName, lastName, email, hiredDate
+    }, {
+        headers:{"Authorization": token}
+    });
+    return userResponse;
+}
+
 export {
     signUpRequest,
-    getUserRequest
+    getUserRequest,
+    putUserRequest
 }

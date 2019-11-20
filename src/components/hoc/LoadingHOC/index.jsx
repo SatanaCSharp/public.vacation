@@ -4,7 +4,8 @@ import "./loader.scss";
 const isEmpty = (props) => (
     props === null ||
     props === undefined ||
-    (props.hasOwnProperty('length') && props.length === 0)
+    (props.hasOwnProperty('length') && props.length === 0) ||
+    Object.keys(props).length === 0
 );
 const Loader = () =>(
     <div className={" react-spinner-loader-svg loader-show" }>
@@ -18,6 +19,7 @@ const Loader = () =>(
 const LoadingHOC = (loadingProp) => (WrappedComponent) => {
     return class LoadingHOC extends Component {
         render() {
+            console.log("This props Loading: ", this.props[loadingProp]);
             return isEmpty(this.props[loadingProp]) ? <Loader/> : <WrappedComponent {...this.props}/>
         }
     }

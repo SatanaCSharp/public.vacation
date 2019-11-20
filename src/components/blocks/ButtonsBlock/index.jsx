@@ -6,6 +6,9 @@ import './buttons.scss';
 const SuccessButton = ({buttonTitle, handleButtonClick, }) => (
     <button className={"success-btn "} onClick={  handleButtonClick}>{buttonTitle}</button>
 );
+const BackButton = ({to, title }) => (
+    <Link className="back-btn " to={to}>{title}</Link>
+);
 const DefaultButton = ({to, title})=> (
     <Link className="btn-default" to={to}>{title}</Link>
 );
@@ -32,6 +35,7 @@ const DeleteCircleButton = ({to}) => (
 
 export {
     SuccessButton,
+    BackButton,
     DefaultButton,
     EditButton,
     InfoCircleButton,

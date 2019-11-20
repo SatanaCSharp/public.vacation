@@ -17,7 +17,8 @@ $fontPoppins: 'Poppins', sans-serif;
 
 //Colors
 $baseBg: #31af91;
-$baseColor: #6c757d;
+$baseColor: #999;
+$baseLightColor: #fff;
 $baseHoverColor: #31af91;
 $baseBorderColor: #999;
 $checkboxBackground: #fff;
@@ -28,3 +29,5 @@ $userInfoColor: #08316e;
 $baseNavFontSize: 16px;
 $baseNavFontSize-xs: 14px;
 
+//Border
+$baseBorderRadius: 5px;
