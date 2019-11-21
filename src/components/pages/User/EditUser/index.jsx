@@ -1,10 +1,8 @@
 import React, { Component} from "react";
-import axios from "axios";
-import config from "../../../../config";
 import { connect } from "react-redux";
-import { Inputs, Buttons } from "../../..";
-import { getUserData } from "../../../../services/localStorageService";
-import { userPending } from "../../../../actions/userActionCreator";
+import { Inputs } from "../../..";
+import Modal  from "../../../portals/modals/Modal"
+
 
 class EditUser extends Component {
     state = {
@@ -34,40 +32,38 @@ class EditUser extends Component {
             hiredDate: date
         })
     }
+    handleOnClose = ()=>{
+        console.log("On close");
+    }
     handleButtonClick = () => {
-        const token = localStorage.getItem("token");
-        const {userId, firstName, lastName, email, hiredDate} = this.state;
-        axios.put(`${config.apiUrl}/users/${userId}`,{
-            firstName, lastName, email, hiredDate
-        },
-        {
-            headers:{"Authorization": token}
-        });
+        console.log("Click Works");
     }
     componentDidMount() {
-        if(!Object.keys(this.props.user).length) {
-            const userData = getUserData();
-            this.props.dispatch(userPending(userData));
-        }
         if(Object.keys(this.props.user).length) {
             this.initUserState(this.props.user);
-            console.log("Reload User: ", this.props);
+            console.log("Loaded User: ", this.props);
         }
     }
+
     render () {
         const props = this.state;
+        console.log("Props: ", this.props);
         return(
-            <section className="user-edit">
-                <section className="container">
-                    <Buttons.BackButton title={"Go Back"} to={"/cabinet"} />
-                    <Inputs.EditUserInputGroup
-                        props={props}
-                        handleInputChange={this.handleInputChange}
-                        handleButtonClick={this.handleButtonClick}
-                        handleInputDateChange={this.handleInputDateChange}
-                    />
+            <Modal
+            title="Edit personal detail"
+            isOpen={this.props.isOpen}
+            onClose={this.handleOnClose}
+            >
+                <section className="user-edit">
+                        <Inputs.EditUserInputGroup
+                            props={props}
+                            handleInputChange={this.handleInputChange}
+                            handleButtonClick={this.handleButtonClick}
+                            handleInputDateChange={this.handleInputDateChange}
+                        />
                 </section>
-            </section>
+            </Modal>
+
         )
     }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { FiEdit2, FiTrash } from "react-icons/fi";
+import { FiEdit2, FiTrash, FiX } from "react-icons/fi";
 import { FaInfo } from "react-icons/fa";
 import './buttons.scss';
 const SuccessButton = ({buttonTitle, handleButtonClick, }) => (
@@ -9,10 +9,18 @@ const SuccessButton = ({buttonTitle, handleButtonClick, }) => (
 const BackButton = ({to, title }) => (
     <Link className="back-btn " to={to}>{title}</Link>
 );
+const CloseButton = ({ handleButtonClick }) => (
+     <FiX size={18} color={"#6c757d"} onClick={handleButtonClick}/>
+);
 const DefaultButton = ({to, title})=> (
     <Link className="btn-default" to={to}>{title}</Link>
 );
-const EditButton = ({to})=>(
+const EditButton = ({handleButtonClick})=>(
+    <section className="btn-link">
+        <span className="btn-link__edit" onClick={handleButtonClick} ><FiEdit2 color={"#fff"} /></span>
+    </section>
+);
+const EditLink = ({to})=>(
     <section className="btn-link">
         <Link to={to} className="btn-link__edit"><FiEdit2 color={"#fff"} /></Link>
     </section>
@@ -36,8 +44,10 @@ const DeleteCircleButton = ({to}) => (
 export {
     SuccessButton,
     BackButton,
+    CloseButton,
     DefaultButton,
     EditButton,
+    EditLink,
     InfoCircleButton,
     EditCircleButton,
     DeleteCircleButton

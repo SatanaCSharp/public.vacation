@@ -12,7 +12,7 @@ const HiredDatePicker = ({props,  handleInputDateChange}) =>(
     />
 );
 const UserEditInputGroup = ({props, handleInputChange, handleButtonClick, handleInputDateChange}) =>(
-    <section className="input-group">
+    <section className="input-group input-group-modal">
         <section className= "input-group__user-name">
             <input name="firstName" type="text" value={props.firstName} onChange={handleInputChange}  className="input-group__user-name_first"placeholder="First Name" autoFocus/>
             <input name="lastName" type="text" value={props.lastName} onChange={handleInputChange}  className="input-group__user-name_last"placeholder="Last Name" />
