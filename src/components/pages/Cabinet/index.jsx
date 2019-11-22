@@ -4,7 +4,31 @@ import { connect } from "react-redux";
 import { userPending } from "../../../actions/userActionCreator";
 import { UserInfoBlock, VacationListBlock } from "../../";
 import { getUserData } from '../../../services/localStorageService';
+import { LoadingHOC } from '../../hoc';
 import "./cabinet.scss";
+
+class CabinetBlock extends Component {
+
+    render() {
+        const vacations = [];
+        return (
+            <>
+            <UserEdit
+            isOpen={this.props.isOpenUserEdit}
+            onClose={this.props.handleIsOpenModalClick}
+            />
+            <section className="cabinet">
+                <section className="container">
+                    <UserInfoBlock props={this.props.user} handleEditUserButtonClick={this.props.handleIsOpenModalClick}/>
+                    <VacationListBlock vacations={vacations}/>
+                </section>
+            </section>
+            </>
+        )
+    }
+}
+const CabinetUI = LoadingHOC('user')(CabinetBlock);
+
 class Cabinet extends Component {
     state = {
         isOpenUserEdit: false
@@ -16,24 +40,19 @@ class Cabinet extends Component {
             this.props.dispatch(userPending(userData));
         }
     }
-    handleEditUserButtonClick = () =>{
+    handleIsOpenModalClick = () =>{
         this.setState({
             isOpenUserEdit: !this.state.isOpenUserEdit
         });
     }
     render() {
         const {user} = this.props;
-        const vacations = [];
         return (
-            <>
-            <UserEdit userInfo={ user } isOpen={this.state.isOpenUserEdit}/>
-            <section className="cabinet">
-                <section className="container">
-                    <UserInfoBlock props={user} handleEditUserButtonClick={this.handleEditUserButtonClick}/>
-                    <VacationListBlock vacations={vacations}/>
-                </section>
-            </section>
-            </>
+            <CabinetUI
+            user={user}
+            isOpenUserEdit={this.state.isOpenUserEdit}
+            handleIsOpenModalClick={this.handleIsOpenModalClick}
+            />
         )
     }
 }

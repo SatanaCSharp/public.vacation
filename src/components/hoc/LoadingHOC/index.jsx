@@ -19,7 +19,6 @@ const Loader = () =>(
 const LoadingHOC = (loadingProp) => (WrappedComponent) => {
     return class LoadingHOC extends Component {
         render() {
-            console.log("This props Loading: ", this.props[loadingProp]);
             return isEmpty(this.props[loadingProp]) ? <Loader/> : <WrappedComponent {...this.props}/>
         }
     }

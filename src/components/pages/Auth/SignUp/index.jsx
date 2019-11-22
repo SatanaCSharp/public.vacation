@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Buttons, Inputs } from '../../../';
 import { Link} from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { signUpRequest } from "../../../../services/requestService";
-import * as validationService from "../../../../services/validationService";
 import { setUserData }  from "../../../../services/localStorageService";
+import { SIGH_UP_FORM_ERRORS } from '../../../../constants/errorTypes';
+import ErrorsService from '../../../../services/ErorrsService';
 import "./sign_up.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -45,41 +46,14 @@ class SignUpPage extends Component {
             [name]: value
         });
     };
-    setErrors = (errors) => {
-        this.setState({
-            errors: errors
-        })
-    }
-    getErrorsValidatedForm = ()=> {
-        const {firstName, lastName, email, password, passwordConfirmation} = this.state;
-        const validationErrors =  [
-            validationService.validateNameField(firstName, "First name"),
-            validationService.validateNameField(lastName, "Last name"),
-            validationService.validateEmailField(email),
-            validationService.validatePassword(password),
-            validationService.validatePasswordConfirmation(password, passwordConfirmation),
-        ].filter((err)=> err !== undefined);
-        this.setErrors(validationErrors);
-        return validationErrors.length ? validationErrors : null;
-    }
-    showErrors = (errors) => {
-        errors.forEach((err)=>{
-            toast.error(err, {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 10000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-              });
-        });
-    }
+
     handleButtonClick = () => {
-        const errors = this.getErrorsValidatedForm();
-        if(errors) {
-            this.showErrors(errors);
+        const errorsService = new ErrorsService();
+        const {firstName, lastName, email, password, passwordConfirmation} = this.state;
+        errorsService.setFormErrorsIfExists(SIGH_UP_FORM_ERRORS, {firstName, lastName, email, password, passwordConfirmation});
+        if(errorsService.isEmpty) {
+            errorsService.showErrors();
         } else {
-            const {firstName, lastName, email, password, passwordConfirmation} = this.state;
             signUpRequest({firstName, lastName, email, password, passwordConfirmation})
             .then((user) => {
                 setUserData(user._id, user.token)

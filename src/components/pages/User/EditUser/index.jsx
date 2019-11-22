@@ -1,25 +1,33 @@
 import React, { Component} from "react";
+import Modal  from "../../../portals/modals/Modal";
 import { connect } from "react-redux";
 import { Inputs } from "../../..";
-import Modal  from "../../../portals/modals/Modal"
+import { ToastContainer } from 'react-toastify';
+import { getUserData } from "../../../../services/localStorageService";
+import { userEditPending } from "../../../../actions/userActionCreator";
+import ErrorsService from "../../../../services/ErorrsService";
+import { EDIT_USER_FORM_ERRORS } from "../../../../constants/errorTypes";
 
 
 class EditUser extends Component {
     state = {
         userId: '',
+        token: '',
         firstName: '',
         lastName: '',
         email: '',
         hiredDate: '',
     }
     initUserState(user) {
-        const {_id, firstName, lastName, email, hiredDate } = user;
+        const { firstName, lastName, email, hiredDate } = user;
+        const userData = getUserData();
         this.setState({
-            userId: _id,
+            userId: userData.userId,
+            token: userData.token,
             firstName: firstName,
             lastName: lastName,
             email: email,
-            hiredDate: new Date(hiredDate),
+            hiredDate: new Date(hiredDate).toISOString(),
         });
     }
     handleInputChange = ({target: {name, value } }) => {
@@ -30,30 +38,34 @@ class EditUser extends Component {
     handleInputDateChange=(date)=>{
         this.setState({
             hiredDate: date
-        })
+        });
     }
-    handleOnClose = ()=>{
-        console.log("On close");
-    }
+
     handleButtonClick = () => {
-        console.log("Click Works");
-    }
-    componentDidMount() {
-        if(Object.keys(this.props.user).length) {
-            this.initUserState(this.props.user);
-            console.log("Loaded User: ", this.props);
+        const errorsService = new ErrorsService();
+        const { userId, token, firstName, lastName, email, hiredDate } = this.state;
+        errorsService.setFormErrorsIfExists(EDIT_USER_FORM_ERRORS, {firstName, lastName, email, hiredDate});
+        if(errorsService.isEmpty) {
+            errorsService.showErrors();
+        } else {
+          this.props.dispatch(userEditPending({ userId, token, firstName, lastName, email, hiredDate }));
+          this.props.onClose();
         }
+    }
+
+    componentDidMount() {
+        this.initUserState(this.props.user);
     }
 
     render () {
         const props = this.state;
-        console.log("Props: ", this.props);
         return(
             <Modal
             title="Edit personal detail"
             isOpen={this.props.isOpen}
-            onClose={this.handleOnClose}
+            onClose={this.props.onClose}
             >
+                <ToastContainer />
                 <section className="user-edit">
                         <Inputs.EditUserInputGroup
                             props={props}

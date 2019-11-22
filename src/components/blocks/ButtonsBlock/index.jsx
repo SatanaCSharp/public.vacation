@@ -10,7 +10,7 @@ const BackButton = ({to, title }) => (
     <Link className="back-btn " to={to}>{title}</Link>
 );
 const CloseButton = ({ handleButtonClick }) => (
-     <FiX size={18} color={"#6c757d"} onClick={handleButtonClick}/>
+     <FiX size={25} color={"#6c757d"} onClick={handleButtonClick}/>
 );
 const DefaultButton = ({to, title})=> (
     <Link className="btn-default" to={to}>{title}</Link>

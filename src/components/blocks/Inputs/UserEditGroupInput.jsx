@@ -3,9 +3,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./inputs.scss";
 import { Buttons } from "../../";
-const HiredDatePicker = ({props,  handleInputDateChange}) =>(
+const HiredDatePicker = ({hiredDate,  handleInputDateChange}) =>(
     <DatePicker
-        selected= {props.hiredDate}
+        selected= {hiredDate}
         onChange={handleInputDateChange}
         placeholderText="Hired Date"
         calendarClassName = "input-date-picker"
@@ -20,7 +20,7 @@ const UserEditInputGroup = ({props, handleInputChange, handleButtonClick, handle
         <input name="email" type="email" value={props.email} onChange={handleInputChange}  className="input-group__email" placeholder="Email"/>
         <section className="input-group__date-picker">
             <HiredDatePicker
-                props={props}
+                hiredDate={new Date(props.hiredDate)}
                 handleInputDateChange={handleInputDateChange}
             />
         </section>

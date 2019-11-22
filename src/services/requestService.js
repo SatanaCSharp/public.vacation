@@ -22,7 +22,7 @@ const putUserRequest = async ({ userId, token, firstName, lastName, email, hired
     }, {
         headers:{"Authorization": token}
     });
-    return userResponse;
+    return mapUserResponseToStateObject(userResponse);
 }
 
 export {
