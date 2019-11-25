@@ -16,6 +16,7 @@
     }
     &.input-group-modal {
         width: 100%;
+
     }
     input {
         height: 35px;
@@ -132,4 +133,26 @@
 .react-datepicker__input-container {
     display: inline-flex !important;
 }
-
+.input-group-modal {
+    .input-group__user-name {
+        @media ($screen-sm-min) {
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        @media ($screen-sm-max) {
+            flex-direction: column;
+        }
+        input {
+            @media ($screen-sm-min) {
+                width: auto;
+            }
+        }
+    }
+    .user-edit & .input-group__date-picker{
+        .react-datepicker-wrapper {
+            input {
+                width: 100%;
+            }
+        }
+    }
+}

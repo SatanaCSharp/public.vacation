@@ -1,3 +1,4 @@
+@import "../../../../styles/index";
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -10,13 +11,20 @@
   }
 
 .modal-window {
-    width: 40%;
     margin: 40px auto;
     padding: 20px;
     position: relative;
     background: #fff;
     border-radius: 5px;
-    transition: all 5s ease-in-out;
+    @media ($screen-md-min) {
+        width: 40%;
+    }
+    @media ($screen-tablet-break) {
+        width: 50%;
+    }
+    @media ($screen-sm-max) {
+        width: 70%;
+    }
     &__header{
       width: 100%;
       padding: 0 0 15px;

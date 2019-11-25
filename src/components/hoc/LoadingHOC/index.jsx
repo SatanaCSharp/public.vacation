@@ -16,10 +16,10 @@ const Loader = () =>(
     </div>
 );
 
-const LoadingHOC = (loadingProp) => (WrappedComponent) => {
+const LoadingHOC = (loadingProps) => (WrappedComponent) => {
     return class LoadingHOC extends Component {
         render() {
-            return isEmpty(this.props[loadingProp]) ? <Loader/> : <WrappedComponent {...this.props}/>
+            return isEmpty(this.props[loadingProps]) ? <Loader/> : <WrappedComponent {...this.props}/>
         }
     }
 }
